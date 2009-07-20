@@ -65,7 +65,7 @@ sub dump_string {
     my $timestamp = sprintf "%s %s %d %02d:%02d:%02d %04d", $days[$wday], $months[$mon], $mday, $hour, $min, $sec, $year + 1900;
     $msg =~ s/\s*$/\n/;
 
-    my @bits = split ( /\%([TLUDAPM])/i, $jconfig->{'log_format'});
+    my @bits = split ( /\%([TLUDAPM])/i, ($jconfig->{'log_format'} || '[%P/%A/%U/%D] %M'));
     my $output = '';
 
     foreach my $idx (0 .. $#bits) {
@@ -83,7 +83,7 @@ sub dump_string {
                 $output .= $jconfig->{'dataset_name'} || '';
 
             } elsif ($bits[$idx] eq 'A') {
-                $output .= $jconfig->{'app_name' || ''};
+                $output .= $jconfig->{'app_name'} || '';
 
             } elsif ($bits[$idx] eq 'P') {
                 $output .= $$;
