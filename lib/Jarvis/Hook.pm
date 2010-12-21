@@ -445,7 +445,7 @@ sub return_status {
 
 
 ################################################################################
-# Invoke the "dataset_fetched" method on each hook.  This occurs for all 
+# Invoke the "dataset_fetched" method on each hook.  This occurs for all
 # dataset within a regular SQL fetch.  If the fetch specifies more than one
 # dataset in a comma-separated list, then we call this for each one.
 #
@@ -482,7 +482,7 @@ sub dataset_fetched {
         my $module = $hook->{'module'};
         my $hook_parameters_href = $hook->{'parameters'};
 
-        my $method = $module . "::return_fetch";
+        my $method = $module . "::dataset_fetched";
         {
             no strict 'refs';
             exists &$method && &Jarvis::Error::debug ($jconfig, "Invoking hook method '$method'");
@@ -494,7 +494,7 @@ sub dataset_fetched {
 }
 
 ################################################################################
-# Invoke the "return_fetch" method on each hook.  This occurs for all 
+# Invoke the "return_fetch" method on each hook.  This occurs for all
 # dataset within a regular SQL fetch.  If the fetch specifies more than one
 # dataset in a comma-separated list, then we call this for each one.
 #
@@ -508,14 +508,14 @@ sub dataset_fetched {
 #
 #       $sql_params_href - All query args (CGI, restful, safe and default).
 #
-#       $return_object  - The complete nested object that we intend to 
+#       $return_object  - The complete nested object that we intend to
 #                         encode in JSON/XML and send back to the client.
 #                         This includes the "rows_aref" for each contained
 #                         dataset in the fetch request.
 #
-#       NOTE: In Jarvis 4.0 this $return_object parameter replaced the 
+#       NOTE: In Jarvis 4.0 this $return_object parameter replaced the
 #       simple $rows_aref structure, as part of the extension to support
-#       multiple datasets within a single fetch request.  It is likely 
+#       multiple datasets within a single fetch request.  It is likely
 #       that your existing hook will be broken.  We apologise in advance.
 #
 #       $extra_href     - Hash of extra parameters to add to the root of
