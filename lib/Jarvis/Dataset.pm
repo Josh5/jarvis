@@ -584,7 +584,7 @@ sub fetch {
                 }
             }
         }
-        
+
         # Load dataset definition.
         my $dsxml = &get_config_xml ($jconfig, $subset_name) || die "Cannot load configuration for dataset '$subset_name'.\n";
 
@@ -704,10 +704,11 @@ sub fetch {
 
         # Store some additional info in jconfig just in case the hook needs it.
         # These will refer to the most recent dataset being processed.
+        $jconfig->{'subset_name'} = $subset_name;
         $jconfig->{'fetched'} = $num_rows;
         $jconfig->{'returned'} = scalar @$rows_aref;
 
-        # This final hook allows you to modify the data returned by SQL for one dataset.  
+        # This final hook allows you to modify the data returned by SQL for one dataset.
         # This hook may do one or both of:
         #
         #   - Completely modify the returned content (by modifying $rows_aref)
